@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ListingCard from '../components/ListingCard';
 import FilterAndSort from '../components/FilterAndSort';
 import Pagination from '../components/Pagination';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
 	const [listings, setListings] = useState([]);
@@ -10,7 +11,7 @@ const HomePage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [listingsPerPage] = useState(9); // Adjust this number as needed
+	const [listingsPerPage] = useState(9);
 
 	useEffect(() => {
 		setLoading(true);
@@ -115,6 +116,7 @@ const HomePage = () => {
 					/>
 				</>
 			)}
+			<Footer />
 		</div>
 	)
 }
