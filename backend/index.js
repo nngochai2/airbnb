@@ -3,10 +3,15 @@ import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import listingsRoutes from './routes/listingsRoutes.js';
 import bookingsRoutes from './routes/bookingRoutes.js';
+import cors from 'cors'
+
+const app = express();
+
+// Middleware for handling CORS policy
+app.use(cors())
 
 dotenv.config();
 
-const app = express();
 const client = new MongoClient(process.env.MONGODB_URI);
 
 let db;
