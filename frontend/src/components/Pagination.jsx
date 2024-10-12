@@ -8,14 +8,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 	}
 
 	return (
-		<nav className="flex justify-center mt-8">
+		<nav className="flex justify-center mt-8 pb-12">
 			<ul className="flex space-x-2">
 				{pageNumbers.map(number => (
 					<li key={number}>
 						<button
 							onClick={() => onPageChange(number)}
 							className={`px-4 py-2 rounded ${currentPage === number
-									? 'bg-blue-500 text-white'
+									? 'bg-airbnb text-white'
 									: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
 								}`}
 						>

@@ -12,12 +12,12 @@ const FilterAndSort = ({ onSortChange, onFilterChange }) => {
 	};
 
 	return (
-		<div className="mb-6 bg-white p-4 rounded-lg shadow">
-			<div className="flex justify-between items-center mb-4">
+		<div className="mb-6 bg-white p-4 rounded-lg shadow w-full">
+			<div className="flex justify-between items-center mb-4 w-full">
 				<h2 className="text-xl font-semibold text-gray-800">Filter & Sort</h2>
 				<button
 					onClick={() => setIsSearchForm(!isSearchForm)}
-					className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+					className="bg-airbnb text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300"
 				>
 					{isSearchForm ? 'Switch to Sort' : 'Switch to Search'}
 				</button>
@@ -62,7 +62,7 @@ const FilterAndSort = ({ onSortChange, onFilterChange }) => {
 							min="1"
 						/>
 					</div>
-					<button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+					<button type="submit" className="w-full bg-airbnb text-white px-4 py-2 rounded hover:bg-red-700transition duration-300">
 						Search
 					</button>
 				</form>

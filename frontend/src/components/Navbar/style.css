@@ -1,0 +1,15 @@
+.navbar ul a.active {
+    color: #52549E
+}
+
+/* a::after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px #52549E;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+} */
+
+a:hover::after {
+    transform: scaleX(1);
+}

@@ -32,7 +32,7 @@ const FooterContactLinks = [
 
 const Footer = () => {
 	return (
-		<div className='block h-50 bg-black'>
+		<div className='block h-50 bg-neutral-900 w-full'>
 			<div className='grid gird-cols-2 sm:grid-cols-3 col-span-2 md:pl-10'>
 				<div>
 					<div className='py-8 px-4'>

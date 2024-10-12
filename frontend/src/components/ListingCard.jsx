@@ -25,14 +25,14 @@ const ListingCard = ({ listing }) => {
 				<h2 className="text-xl font-bold text-gray-800 mb-2">{listing.name}</h2>
 				<p className="text-gray-600 text-sm mb-4 line-clamp-3">{listing.summary}</p>
 				<div className="flex justify-between items-center mb-4">
-					<span className="text-lg font-semibold text-blue-600">${price} <span className="text-sm text-gray-500">/ night</span></span>
+					<span className="text-lg font-semibold text-airbnb">${price} <span className="text-sm text-gray-500">/ night</span></span>
 					<span className="text-sm font-medium bg-green-100 text-green-800 px-2 py-1 rounded-full">
 						Rating: {rating}/100
 					</span>
 				</div>
 				<Link
 					to={`/listing/${listing._id}`}
-					className="block w-full text-center bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600 transition duration-300"
+					className="block w-full text-center bg-airbnb text-white py-2 rounded-md font-semibold hover:bg-red-700 transition duration-300"
 				>
 					View Details
 				</Link>

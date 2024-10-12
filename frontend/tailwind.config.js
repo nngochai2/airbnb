@@ -5,7 +5,12 @@ export default {
     	"./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+		colors: {
+			"navbar": "#111111",
+			"airbnb": "#ff385c"
+		}
+	 },
   },
   plugins: [],
 }
