@@ -1,29 +1,31 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import ListingCard from '../components/ListingCard';
 import FilterAndSort from '../components/FilterAndSort';
+import Pagination from '../components/Pagination';
 
 const HomePage = () => {
 	const [listings, setListings] = useState([]);
 	const [filteredListings, setFilteredListings] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [listingsPerPage] = useState(9); // Adjust this number as needed
 
 	useEffect(() => {
 		setLoading(true);
-		axios
-			.get('http://localhost:3030/api/listings')
+		axios.get('http://localhost:3030/api/listings')
 			.then((response) => {
-				// Check if response.data is an array, if not, use response.data.data
 				const listingsData = Array.isArray(response.data) ? response.data : response.data.data;
 				setListings(listingsData || []);
+				setFilteredListings(listingsData || []);
 				setLoading(false);
 			})
 			.catch((error) => {
 				console.error("Error fetching listings:", error);
-				setError(error.message || "An error occurred while fetching listings.");
+				setError(error.message || "An error occurred while fetching listings");
 				setLoading(false);
-			})
+			});
 	}, []);
 
 	const handleSort = (sortOption) => {
@@ -45,6 +47,7 @@ const HomePage = () => {
 				break;
 		}
 		setFilteredListings(sorted);
+		setCurrentPage(1); // Reset to first page after sorting
 	};
 
 	const handleFilter = ({ location, propertyType, bedrooms }) => {
@@ -56,6 +59,7 @@ const HomePage = () => {
 			);
 		});
 		setFilteredListings(filtered);
+		setCurrentPage(1); // Reset to first page after filtering
 	};
 
 	const getNumericValue = (value) => {
@@ -64,6 +68,14 @@ const HomePage = () => {
 		}
 		return parseFloat(value) || 0;
 	};
+
+	// Get current listings
+	const indexOfLastListing = currentPage * listingsPerPage;
+	const indexOfFirstListing = indexOfLastListing - listingsPerPage;
+	const currentListings = filteredListings.slice(indexOfFirstListing, indexOfLastListing);
+
+	// Change page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	if (loading) {
 		return (
@@ -81,13 +93,6 @@ const HomePage = () => {
 		)
 	}
 
-	if (!listings || listings.length === 0) {
-		return (
-			<div className='text-center'>
-				No listings available.
-			</div>
-		)
-	}
 	return (
 		<div>
 			<h1 className="text-3xl font-bold text-gray-800 mb-6">Available Listings</h1>
@@ -97,14 +102,21 @@ const HomePage = () => {
 					No listings available matching your criteria.
 				</div>
 			) : (
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{filteredListings.map(listing => (
-						<ListingCard key={listing._id} listing={listing} />
-					))}
-				</div>
+				<>
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						{currentListings.map(listing => (
+							<ListingCard key={listing._id} listing={listing} />
+						))}
+					</div>
+					<Pagination
+						currentPage={currentPage}
+						totalPages={Math.ceil(filteredListings.length / listingsPerPage)}
+						onPageChange={paginate}
+					/>
+				</>
 			)}
 		</div>
 	)
 }
 
-export default HomePage
+export default HomePage;

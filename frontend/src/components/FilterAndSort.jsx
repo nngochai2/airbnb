@@ -1,7 +1,6 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const FilterAndSort = () => {
+const FilterAndSort = ({ onSortChange, onFilterChange }) => {
 	const [isSearchForm, setIsSearchForm] = useState(false);
 	const [location, setLocation] = useState('');
 	const [propertyType, setPropertyType] = useState('');
@@ -13,9 +12,9 @@ const FilterAndSort = () => {
 	};
 
 	return (
-		<div className="mb-6">
+		<div className="mb-6 bg-white p-4 rounded-lg shadow">
 			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-xl font-semibold">Filter & Sort</h2>
+				<h2 className="text-xl font-semibold text-gray-800">Filter & Sort</h2>
 				<button
 					onClick={() => setIsSearchForm(!isSearchForm)}
 					className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
@@ -86,7 +85,7 @@ const FilterAndSort = () => {
 				</div>
 			)}
 		</div>
-	)
-}
+	);
+};
 
-export default FilterAndSort
+export default FilterAndSort;
