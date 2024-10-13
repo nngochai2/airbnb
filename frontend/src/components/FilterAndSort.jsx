@@ -26,23 +26,23 @@ const FilterAndSort = ({ onSortChange, onFilterChange }) => {
 			{isSearchForm ? (
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
-						<label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+						<label htmlFor="location" className="block text-sm font-medium text-gray-700 pb-2">Location</label>
 						<input
 							type="text"
 							id="location"
 							value={location}
 							onChange={(e) => setLocation(e.target.value)}
-							className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+							className="mt-1 pl-2 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-red-400 focus:ring focus:ring-red-400 focus:ring-opacity-50"
 							placeholder="Enter location"
 						/>
 					</div>
 					<div>
-						<label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">Property Type</label>
+						<label htmlFor="propertyType" className="block text-sm font-medium text-gray-700 pb-2">Property Type</label>
 						<select
 							id="propertyType"
 							value={propertyType}
 							onChange={(e) => setPropertyType(e.target.value)}
-							className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+							className="mt-1 pl-2 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-red-400 focus:ring focus:ring-red-400 focus:ring-opacity-50 tex-"
 						>
 							<option value="">Select property type</option>
 							<option value="Apartment">Apartment</option>
@@ -51,13 +51,13 @@ const FilterAndSort = ({ onSortChange, onFilterChange }) => {
 						</select>
 					</div>
 					<div>
-						<label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700">Number of Bedrooms</label>
+						<label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700 pb-2">Number of Bedrooms</label>
 						<input
 							type="number"
 							id="bedrooms"
 							value={bedrooms}
 							onChange={(e) => setBedrooms(e.target.value)}
-							className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+							className="mt-1 pl-2 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 							placeholder="Enter number of bedrooms"
 							min="1"
 						/>
