@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -8,6 +8,7 @@ const SuccessfulBookingPage = () => {
 	const [loading, setLoading] = useState(true);
 	const location = useLocation();
 	const bookingId = location.state?.bookingId;
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchBookingDetails = async () => {
