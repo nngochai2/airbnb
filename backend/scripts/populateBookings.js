@@ -26,10 +26,10 @@ async function populateBookings() {
       const endDate = new Date(startDate);
       endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 7) + 1);
 
-      const listingId = `listing${Math.floor(Math.random() * 20) + 1}`;
+      const listingId = `${Math.floor(Math.random() * 20) + 1}`;
       
       const booking = {
-        _id: new ObjectId(), // Generate a new ObjectId for each booking
+        _id: String(new ObjectId()), // Generate a new ObjectId for each booking
         listing_id: listingId,
         start_date: startDate,
         end_date: endDate,

@@ -21,7 +21,7 @@ async function populateListings() {
 
     for (let i = 1; i <= 20; i++) {
       const listing = {
-        _id: `listing${i}`,
+        _id: `${i}`,
         name: `Listing ${i}`,
         summary: `Beautiful ${propertyTypes[i % 5]} in ${cities[i % 5]}`,
         property_type: propertyTypes[i % 5],

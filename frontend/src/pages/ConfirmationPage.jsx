@@ -2,57 +2,90 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useBookingContext } from '../contexts/BookingContext';
 
 const ConfirmationPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const location = useLocation();
 	const navigate = useNavigate();
-	const { bookingData, listingDetails } = location.state || {};
+	const { bookingData, setBookingData, listingDetails, setListingDetails } = useBookingContext();
 
 	useEffect(() => {
-		if (!bookingData || !listingDetails) {
-			navigate('/');
+		if (location.state?.bookingData) {
+			setBookingData(location.state.bookingData);
 		}
-	}, [bookingData, listingDetails, navigate]);
+
+		if (location.state?.listingDetails) {
+			setListingDetails(location.state.listingDetails);
+		}
+
+		if (!bookingData || !listingDetails) {
+			setError('Booking information is incomplete. Please try again.');
+		}
+	}, [location.state, setBookingData, setListingDetails]);
 
 	const handleConfirmBooking = async () => {
+		if (!bookingData || !listingDetails) {
+			setError('Cannot proceed with booking due to missing information.');
+			return;
+		}
+
 		setLoading(true);
 		setError(null);
+
 		try {
-			const response = await axios.post('http://localhost:3030/api/bookings', {
+			const bookingPayload = {
 				...bookingData,
 				listing_id: listingDetails._id
-			});
+			};
+
+			console.log('Sending booking data:', bookingPayload); // For debugging
+
+			const response = await axios.post('http://localhost:3030/api/bookings', bookingPayload);
 			setLoading(false);
 			navigate('/booking-success', { state: { bookingId: response.data._id } });
 		} catch (err) {
 			setLoading(false);
-			if (err.response) {
-				// The request was made and the server responded with a status code
-				// that falls out of the range of 2xx
-				setError(err.response.data.message || 'Failed to confirm booking. Please try again.');
-			} else if (err.request) {
-				// The request was made but no response was received
-				setError('No response from server. Please check your internet connection and try again.');
-			} else {
-				// Something happened in setting up the request that triggered an Error
-				setError('An unexpected error occurred. Please try again.');
-			}
 			console.error('Booking confirmation error:', err);
+			setError(err.response?.data?.message || 'Failed to confirm booking. Please try again.');
 		}
 	};
 
 	if (!bookingData || !listingDetails) {
-		return null; // This will prevent any rendering while redirecting
+		return (
+			<div className="max-w-2xl mx-auto p-4">
+				<h1 className="text-3xl font-bold mb-6">Error</h1>
+				<p className="text-red-500">{error || "Missing booking information. Please try again."}</p>
+				<button
+					onClick={() => navigate(-1)}
+					className="mt-4 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300"
+				>
+					Go Back
+				</button>
+			</div>
+		);
 	}
+
+	const totalNights = calculateNights(bookingData.start_date, bookingData.end_date);
+	const totalPrice = (listingDetails.price * totalNights).toFixed(2);
 
 	return (
 		<div className="max-w-2xl mx-auto p-4">
 			<h1 className="text-3xl font-bold mb-6">Confirm Your Booking</h1>
 			<div className="bg-white shadow-md rounded-lg p-6 mb-6">
-				{/* Booking details */}
-				{/* ... (same as before) ... */}
+				<h2 className="text-xl font-semibold mb-4">{listingDetails.name}</h2>
+				<div className="grid grid-cols-2 gap-4 mb-4">
+					<div><span className="font-semibold">Check-in:</span> {bookingData.start_date}</div>
+					<div><span className="font-semibold">Check-out:</span> {bookingData.end_date}</div>
+					<div><span className="font-semibold">Guest:</span> {bookingData.client_name}</div>
+					<div><span className="font-semibold">Email:</span> {bookingData.email}</div>
+					<div><span className="font-semibold">Nights:</span> {totalNights}</div>
+					<div><span className="font-semibold">Price per night:</span> ${listingDetails.price}</div>
+				</div>
+				<div className="text-lg font-semibold mb-4">
+					Total: ${totalPrice}
+				</div>
 			</div>
 			{error && (
 				<div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
@@ -78,6 +111,14 @@ const ConfirmationPage = () => {
 			{loading && <LoadingSpinner />}
 		</div>
 	);
+};
+
+const calculateNights = (startDate, endDate) => {
+	const start = new Date(startDate);
+	const end = new Date(endDate);
+	const diffTime = Math.abs(end - start);
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+	return diffDays;
 };
 
 export default ConfirmationPage;
