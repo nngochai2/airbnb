@@ -7,36 +7,40 @@ router.post('/', async (req, res) => {
   try {
     console.log('Received booking data:', req.body);
 
-    const listingsCollection = req.app.locals.db.collection('listings');
-    const bookingsCollection = req.app.locals.db.collection('bookings');
+    const db = req.app.locals.db;
+    if (!db) {
+      throw new Error('Database connection not available');
+    }
 
-    if (!req.body.listing_id) {
+    const listingsCollection = db.collection('listings');
+    const bookingsCollection = db.collection('bookings');
+
+    const { listing_id, ...bookingData } = req.body;
+
+    if (!listing_id) {
       return res.status(400).json({ message: 'listing_id is required' });
     }
 
-    const listing = await listingsCollection.findOne({ _id: req.body.listing_id });
+    // Check if the listing exists
+    const listing = await listingsCollection.findOne({ _id: listing_id });
     if (!listing) {
       return res.status(404).json({ message: 'Listing not found' });
     }
 
     const booking = {
-      listing_id: req.body.listing_id,
-      start_date: new Date(req.body.start_date),
-      end_date: new Date(req.body.end_date),
-      client_name: req.body.client_name,
-      email: req.body.email,
-      daylightPhone: req.body.daylightPhone,
-      mobilePhone: req.body.mobilePhone,
-      postalAddress: req.body.postalAddress,
-      homeAddress: req.body.homeAddress
+      listing_id,
+      ...bookingData,
+      start_date: new Date(bookingData.start_date),
+      end_date: new Date(bookingData.end_date),
+      created_at: new Date()
     };
-	 
+
     const result = await bookingsCollection.insertOne(booking);
     console.log('Booking created:', result.insertedId);
     res.status(201).json({ ...booking, _id: result.insertedId });
   } catch (error) {
     console.error('Error creating booking:', error);
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
 
@@ -52,6 +56,29 @@ router.get('/listing/:listing_id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching bookings:', error);
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Get a single booking
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const db = req.app.locals.db;
+    if (!db) {
+      throw new Error('Database connection not available');
+    }
+
+    const bookingsCollection = db.collection('bookings');
+
+    const booking = await bookingsCollection.findOne({ _id: id });
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json(booking);
+  } catch (error) {
+    console.error('Error fetching booking:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
 

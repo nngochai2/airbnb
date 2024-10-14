@@ -6,6 +6,7 @@ export const useBookingContext = () => useContext(BookingContext);
 
 export const BookingProvider = ({ children }) => {
 	const [bookingData, setBookingData] = useState({
+		listing_id: '',
 		start_date: '',
 		end_date: '',
 		client_name: '',

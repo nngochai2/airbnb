@@ -26,6 +26,9 @@ const ConfirmationPage = () => {
 	}, [location.state, setBookingData, setListingDetails]);
 
 	const handleConfirmBooking = async () => {
+		console.log('Booking data in confirmation page:', bookingData);
+		console.log('Listing details in confirmation page:', listingDetails)
+
 		if (!bookingData || !listingDetails) {
 			setError('Cannot proceed with booking due to missing information.');
 			return;
@@ -36,8 +39,7 @@ const ConfirmationPage = () => {
 
 		try {
 			const bookingPayload = {
-				...bookingData,
-				listing_id: listingDetails._id
+				...bookingData
 			};
 
 			console.log('Sending booking data:', bookingPayload); // For debugging

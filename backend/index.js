@@ -8,7 +8,8 @@ import cors from 'cors'
 const app = express();
 
 // Middleware for handling CORS policy
-app.use(cors())
+app.use(cors());
+app.use(express.json());
 
 dotenv.config();
 

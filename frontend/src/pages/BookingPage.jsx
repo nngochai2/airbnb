@@ -15,11 +15,16 @@ const BookingPage = () => {
 			setLoading(true);
 			try {
 				const response = await axios.get(`http://localhost:3030/api/listings/${listingId}`);
+				console.log('Listing details fetched:', response.data);
 				setListingDetails(response.data);
-				setBookingData(prevData => ({ 
-					...prevData, 
+				setBookingData(prevData => {
+					const newData = {
+						...prevData, 
 					listing_id: response.data._id
-				}))
+					} 
+					console.log('Updated booking data in booking page:', newData);
+					return newData;
+				})
 			} catch (error) {
 				console.error('Error fetching listing:', error);
 			} finally {
