@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -70,7 +71,10 @@ router.get('/:id', async (req, res) => {
 
     const bookingsCollection = db.collection('bookings');
 
-    const booking = await bookingsCollection.findOne({ _id: id });
+    // Convert string ID to ObjectId
+    const objectId = new ObjectId(id);
+
+    const booking = await bookingsCollection.findOne({ _id: objectId });
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
     }

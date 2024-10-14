@@ -37,7 +37,7 @@ const SuccessfulBooking = () => {
 
 	if (error) {
 		return (
-			<div className="max-w-2xl mx-auto p-4 text-center">
+			<div className="max-w-2xl mx-auto p-4 text-center pb-8">
 				<h1 className="text-3xl font-bold mb-4">Booking Confirmed</h1>
 				<p className="mb-4">Your booking has been successfully confirmed, but we couldn't retrieve the details.</p>
 				<p className="text-red-500 mb-4">{error}</p>
@@ -50,7 +50,7 @@ const SuccessfulBooking = () => {
 
 	if (!booking) {
 		return (
-			<div className="max-w-2xl mx-auto p-4 text-center">
+			<div className="max-w-2xl mx-auto p-4 text-center pb-8">
 				<h1 className="text-3xl font-bold mb-4">Booking Confirmed</h1>
 				<p>Your booking has been successfully confirmed, but we couldn't retrieve the details.</p>
 				<Link to="/" className="bg-airbnb text-white px-4 py-2 rounded hover:bg-red-700">
@@ -76,7 +76,7 @@ const SuccessfulBooking = () => {
 					<div><span className="font-semibold">Email:</span> {booking.email}</div>
 				</div>
 			</div>
-			<div className="text-center">
+			<div className="text-center pt-2 pb-8">
 				<Link to="/" className="bg-airbnb text-white px-6 py-2 rounded hover:bg-red-700 transition duration-300">
 					Return to Home
 				</Link>

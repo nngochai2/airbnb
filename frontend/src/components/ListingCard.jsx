@@ -26,13 +26,13 @@ const ListingCard = ({ listing }) => {
 				<p className="text-gray-600 text-sm mb-4 line-clamp-3">{listing.summary}</p>
 				<div className="flex justify-between items-center mb-4">
 					<span className="text-lg font-semibold text-airbnb">${price} <span className="text-sm text-gray-500">/ night</span></span>
-					<span className="text-sm font-medium bg-green-100 text-green-800 px-2 py-1 rounded-full">
+					<span className="text-sm font-medium px-2 py-1 rounded-full bg-green-100 text-green-800 ">
 						Rating: {rating}/100
 					</span>
 				</div>
 				<Link
 					to={`/listing/${listing._id}`}
-					className="block w-full text-center bg-airbnb text-white py-2 rounded-md font-semibold hover:bg-red-700 transition duration-300"
+					className="block w-11/12 text-center m-auto bg-airbnb text-white py-2 rounded-md font-semibold hover:bg-red-700 transition duration-300"
 				>
 					View Details
 				</Link>
