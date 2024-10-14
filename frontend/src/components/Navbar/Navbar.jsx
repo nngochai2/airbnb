@@ -24,6 +24,7 @@ const Navbar = () => {
 							<div className="ml-12 flex items-baseline space-x-8">
 								<NavLink to="/">HOME</NavLink>
 								<NavLink to="/about">ABOUT</NavLink>
+								<NavLink to="/">TERMS</NavLink>
 							</div>
 						</div>
 					</div>
