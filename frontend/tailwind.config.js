@@ -23,9 +23,17 @@ export default {
   },
   variants: {
 		extend: {
-			animation: ['responsive']
+			animation: ['responsive', 'motion-safe', 'motion-reduce'],
 		}
   },
-  plugins: [],
+  plugins: [
+		function({ addUtilities, theme }) {
+			const animationDelays = {
+				'.animation-delay-500': { 'animation-delay': '500ms' },
+				'.animation-delay-1000': { 'animation-delay': '1000ms' },
+			}
+			addUtilities(animationDelays, ['responsive', 'hover'])
+		}
+  ],
 }
 
