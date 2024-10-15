@@ -1,4 +1,4 @@
-# Clone AirBnB Web Application 
+# Clone Airbnb Web Application 
 ## Author: Nguyen Ngoc Hai
 
 ## Overview
