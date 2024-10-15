@@ -15,6 +15,8 @@ const HomePage = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [listingsPerPage] = useState(9);
 	const mainContentRef = useRef(null);
+	const [animatedTitle, setAnimatedTitle] = useState('');
+	const [animatedSubtitle, setAnimatedSubtitle] = useState('');
 
 	useEffect(() => {
 		setLoading(true);
@@ -30,6 +32,27 @@ const HomePage = () => {
 				setError(error.message || "An error occurred while fetching listings");
 				setLoading(false);
 			});
+
+		// Effect for text animation
+		const title = 'Welcome to Our Listings';
+		const subtitle = 'Find your perfect stay with us';
+		let titleIndex = 0;
+		let subtitleIndex = 0;
+
+		const titleInterval = setInterval(() => {
+			setAnimatedTitle(title.slice(0, titleIndex));
+			titleIndex++;
+			if (titleIndex > title.length) {
+				clearInterval(titleInterval);
+
+				// Start subtitle animation after title is complete
+				const subtitleInterval = setInterval(() => {
+					setAnimatedSubtitle(subtitle.slice(0, subtitleIndex));
+					subtitleIndex++;
+					if (subtitleIndex > subtitle.length) clearInterval(subtitleInterval);
+				}, 25);
+			}
+		}, 50);
 	}, []);
 
 	const handleSort = (sortOption) => {
@@ -100,7 +123,7 @@ const HomePage = () => {
 	}
 
 	return (
-		<div className="w-full"> {/* Full width background */}
+		<div className="w-full">
 			<div className="w-full">
 				{/* Hero Section */}
 				<div className="relative h-screen w-full shadow-lg">
@@ -110,8 +133,8 @@ const HomePage = () => {
 						<div className="absolute inset-0 bg-black bg-opacity-50"></div> {/* Gradient overlay */}
 					</div>
 					<div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-						<h1 className="text-5xl font-bold mb-4">Welcome to Our Listings</h1>
-						<p className="text-xl mb-8">Find your perfect stay with us</p>
+						<h1 className="text-5xl font-bold mb-4">{animatedTitle}</h1>
+						<p className="text-xl mb-8">{animatedSubtitle}</p>
 						<button
 							onClick={scrollToMainContent}
 							className="bg-airbnb hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300"

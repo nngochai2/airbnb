@@ -31,6 +31,7 @@ export default {
 			const animationDelays = {
 				'.animation-delay-500': { 'animation-delay': '500ms' },
 				'.animation-delay-1000': { 'animation-delay': '1000ms' },
+				'.animation-delay-2000': { 'animation-delay': '2000ms' },
 			}
 			addUtilities(animationDelays, ['responsive', 'hover'])
 		}
