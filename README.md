@@ -68,7 +68,7 @@ This project is a web-based application that emulates core functionalities of Ai
 2. In a new terminal, start the frontend development server:
    ```
    cd frontend
-   npm start
+   npm run dev
    ```
 
 3. Open your browser and navigate to `http://localhost:3000` to view the application.
