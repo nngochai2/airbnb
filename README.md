@@ -27,8 +27,8 @@ This project is a web-based application that emulates core functionalities of Ai
 
 1. Clone the repository:
    ```
-   git clone [your-repository-url]
-   cd [your-project-name]
+   gh repo clone nngochai2/airbnb
+   cd nngochai2/airbnb
    ```
 
 2. Install dependencies:
@@ -45,7 +45,7 @@ This project is a web-based application that emulates core functionalities of Ai
 3. Set up environment variables:
    Create a `.env` file in the backend directory with the following content:
    ```
-   MONGODB_URI=your_mongodb_connection_string
+   MONGODB_URI=[Email me]
    PORT=3030
    ```
 
