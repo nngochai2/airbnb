@@ -19,7 +19,7 @@ const SuccessfulBooking = () => {
 			}
 			try {
 				console.log('Fetching booking details for ID:', bookingId);
-				const response = await axios.get(`http://localhost:3030/api/bookings/${bookingId}`);
+				const response = await axios.get(`/api/bookings/${bookingId}`);
 				console.log('Booking details response:', response.data);
 				setBooking(response.data);
 				setLoading(false);
