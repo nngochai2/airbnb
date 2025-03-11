@@ -14,7 +14,7 @@ const BookingPage = () => {
 		const fetchListing = async () => {
 			setLoading(true);
 			try {
-				const response = await axios.get(`http://localhost:3030/api/listings/${listingId}`);
+				const response = await axios.get(`/api/listings/${listingId}`);
 				console.log('Listing details fetched:', response.data);
 				setListingDetails(response.data);
 				setBookingData(prevData => {

@@ -12,7 +12,7 @@ const ListingDetails = () => {
 	useEffect(() => {
 		const fetchListing = async () => {
 			try {
-				const response = await axios.get(`http://localhost:3030/api/listings/${id}`);
+				const response = await axios.get(`/api/listings/${id}`);
 				setListing(response.data);
 				setLoading(false);
 			} catch (error) {

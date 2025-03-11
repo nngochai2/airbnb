@@ -44,7 +44,7 @@ const ConfirmationPage = () => {
 
 			console.log('Sending booking data:', bookingPayload); // For debugging
 
-			const response = await axios.post('http://localhost:3030/api/bookings', bookingPayload);
+			const response = await axios.post('/api/bookings', bookingPayload);
 			setLoading(false);
 			navigate('/booking-success', { state: { bookingId: response.data._id } });
 		} catch (err) {

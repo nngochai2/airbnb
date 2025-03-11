@@ -20,7 +20,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		axios.get('http://localhost:3030/api/listings')
+		axios.get('/api/listings')
 			.then((response) => {
 				const listingsData = Array.isArray(response.data) ? response.data : response.data.data;
 				setListings(listingsData || []);
