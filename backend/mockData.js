@@ -1,6 +1,4 @@
-import { MongoClient } from 'mongodb';
-
-const mockListings = [
+export const mockListings = [
   {
     _id: "1",
     name: "Listing 1",
@@ -323,79 +321,41 @@ const mockListings = [
   }
 ];
 
-let cachedb = null;
-
-async function connectToDatabase() {
-	if (cachedb) {
-		return cachedb;
-	}
-
-	try {
-		const client = await MongoClient.connect(process.env.MONGODB_URI);
-		const db = await client.db('sample_airbnb');
-		cachedb = db;
-		return db;
-	} catch (error) {
-		console.error('Database connection failed:', error);
-		return null;
-	}
-}
-
-function filterListings(listings, filters) {
-	return listings.filter(listing => {
-		if (filters.location && !new RegExp(filters.location, 'i').test(listing.address.market)) {
-			return false;
-		}
-		if (filters.propertyType && !new RegExp(filters.propertyType, 'i').test(listing.property_type)) {
-			return false;
-		}
-		if (filters.bedrooms && listing.bedrooms !== parseInt(filters.bedrooms)) {
-			return false;
-		}
-		return true;
-	});
-}
-
-export default async function handler(req, res) {
-	try {
-		const db = await connectToDatabase();
-
-		if (req.method === 'GET') {
-			const { location, propertyType, bedrooms } = req.query;
-			
-			if (db) {
-				// Use database if available
-				try {
-					const listingsCollection = db.collection('listings');
-					let query = {};
-
-					if (location) query['address.market'] = new RegExp(location, 'i');
-					if (propertyType) query.property_type = new RegExp(propertyType, 'i');
-					if (bedrooms) query.bedrooms = parseInt(bedrooms);
-
-					const listings = await listingsCollection.find(query).limit(10).toArray();
-					res.status(200).json(listings);
-				} catch (dbError) {
-					// Fall back to mock data on query error
-					const filters = { location, propertyType, bedrooms };
-					const listings = filterListings(mockListings, filters).slice(0, 10);
-					res.status(200).json(listings);
-				}
-			} else {
-				// Use mock data when database is unavailable
-				const filters = { location, propertyType, bedrooms };
-				const listings = filterListings(mockListings, filters).slice(0, 10);
-				res.status(200).json(listings);
-			}
-		} else {
-			res.status(405).json({ message: 'Method not allowed' });
-		}
-	} catch (error) {
-		console.error('Error in handler:', error);
-		// Ultimate fallback to mock data
-		const { location, propertyType, bedrooms } = req.query;
-		const filters = { location, propertyType, bedrooms };
-		const listings = filterListings(mockListings, filters).slice(0, 10);
-		res.status(200).json(listings);
-	}
-}
+export const mockBookings = [
+  {
+    _id: "507f1f77bcf86cd799439011",
+    listing_id: "1",
+    start_date: new Date(2024, 0, 15),
+    end_date: new Date(2024, 0, 22),
+    client_name: "Client 1",
+    email: "client1@example.com",
+    daylightPhone: "+1 555123456",
+    mobilePhone: "+1 555987654",
+    postalAddress: "123 Postal St, City, State, 12345",
+    homeAddress: "456 Home St, City, State, 12345"
+  },
+  {
+    _id: "507f1f77bcf86cd799439012",
+    listing_id: "2",
+    start_date: new Date(2024, 1, 10),
+    end_date: new Date(2024, 1, 18),
+    client_name: "Client 2",
+    email: "client2@example.com",
+    daylightPhone: "+1 555111222",
+    mobilePhone: "+1 555333444",
+    postalAddress: "789 Postal St, City, State, 12345",
+    homeAddress: "321 Home St, City, State, 12345"
+  },
+  {
+    _id: "507f1f77bcf86cd799439013",
+    listing_id: "3",
+    start_date: new Date(2024, 2, 5),
+    end_date: new Date(2024, 2, 12),
+    client_name: "Client 3",
+    email: "client3@example.com",
+    daylightPhone: "+1 555555666",
+    mobilePhone: "+1 555777888",
+    postalAddress: "555 Postal St, City, State, 12345",
+    homeAddress: "999 Home St, City, State, 12345"
+  }
+];
